@@ -48,6 +48,8 @@ services:
             - '${DB_PORT:-27017}:27017'
         volumes:
             - mongo-data:/data/db
+        networks:
+            - sail
 
     mongo-express:
         image: mongo-express
@@ -58,6 +60,8 @@ services:
             ME_CONFIG_MONGODB_ADMINUSERNAME: '${MONGO_ADMIN_USER}'
             ME_CONFIG_MONGODB_ADMINPASSWORD: '${MONGO_ADMIN_PASSWORD}'
             ME_CONFIG_MONGODB_URL: 'mongodb://${DB_USERNAME}:${DB_PASSWORD}@mongo:27017/'
+        networks:
+            - sail
 networks:
     sail:
         driver: bridge

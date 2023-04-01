@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\Model;
+namespace App\Traits;
 
 use App\Traits\Searchable;
 use Illuminate\Database\Eloquent\Builder;
@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Builder;
 trait Filter
 {
     use Searchable;
-    
+
     /**
      * @return Illuminate\Database\Eloquent\Builder
      */

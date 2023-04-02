@@ -57,15 +57,13 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $e)
     {
         if($request->wantsJson() && ! $e instanceof ValidationException) {
-            $statusCode = Response::HTTP_INTERNAL_SERVER_ERROR;
             if($e instanceof UnauthorizedException || $e instanceof UnauthorizedHttpException || $e instanceof AuthorizationException) {
-                $statusCode = Response::HTTP_UNAUTHORIZED;
+                return $this->error($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
 
             } else if($e instanceof CartException) {
-                $statusCode = Response::HTTP_BAD_REQUEST;
+                return $this->error($e->getMessage(), Response::HTTP_BAD_REQUEST);
             }
 
-            return $this->error($e->getMessage(), $statusCode);
         }
 
         return parent::render($request, $e);

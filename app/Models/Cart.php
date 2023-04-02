@@ -10,4 +10,17 @@ class Cart extends Model
     use HasFactory;
 
     protected $guarded = false;
+
+    #################
+    #   RELATIONS   #
+    #################
+    public function items()
+    {
+        return $this->hasMany(CartItem::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

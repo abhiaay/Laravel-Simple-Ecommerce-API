@@ -8,9 +8,9 @@ use App\DTO\Cart as DTOCart;
 use App\DTO\CartItem as DTOCartItem;
 use App\Exceptions\CartException;
 use App\Models\CartItem;
+use App\Models\Product;
 use App\Repositories\MongoDB\CartRepository;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Collection;
 
 class CartService
 {
@@ -32,6 +32,11 @@ class CartService
         if(! $DTOCartItem->isStockValid()) {
             throw new CartException("Failed add cart, stock exceed");
         }
+        
+        if($this->hasProduct($cart, Product::find($DTOCartItem->product_id))) {
+            throw new CartException("Item already in cart");
+        }
+
         return $this->cartRepository->addItem($cart, $DTOCartItem) ?? false;
     }
 
@@ -46,6 +51,14 @@ class CartService
             }
         }
         return true;
+    }
+
+    /**
+     * Check if cart has product
+     */
+    public function hasProduct(Cart $cart, Product $product): bool
+    {
+        return $cart->items()->where('product_id', $product->id)->get()->first() ? true : false;
     }
 
     /**

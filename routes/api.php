@@ -19,6 +19,9 @@ Route::group(['prefix' => 'auth'], function() {
 });
 Route::apiResource('product/category', 'ProductCategoryController')->only('index');
 Route::apiResource('product', 'ProductController')->only(['index', 'show', 'store']);
+Route::group(['prefix' => 'cart', 'as' => 'cart.'], function() {
+    Route::post('add-item', 'CartController@addItem')->name('add-item');
+});
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });

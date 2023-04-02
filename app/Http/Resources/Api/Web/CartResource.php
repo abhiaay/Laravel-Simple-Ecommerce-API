@@ -2,9 +2,10 @@
 
 namespace App\Http\Resources\Api\Web;
 
+use App\Services\Order\Cart\Facade\CartService;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProductResource extends JsonResource
+class CartResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,14 +17,10 @@ class ProductResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'price' => $this->price,
-            'stock' => $this->stock,
-            'thumbnail' => $this->thumbnail_url,
-            'images' => $this->images_url,
+            'total' => CartService::calculateTotal($this->resource),
             'updated_at' => optional($this->updated_at)->format('d-m-Y H:i:s'),
             'created_at' => optional($this->updated_at)->format('d-m-Y H:i:s'),
-            'category' => $this->whenLoaded('category', new ProductCategoryResource($this->category)),
+            'items' => $this->whenLoaded('items', CartItemCollection::make($this->items))
         ];
     }
 }

@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
@@ -21,6 +22,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+            'password' => Hash::make('login123')
         ]);
 
         $categories = ['pakaian', 'fashion', 'celana', 'baju', 'sepatu', 'kacamata'];

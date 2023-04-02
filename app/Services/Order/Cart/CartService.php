@@ -73,4 +73,25 @@ class CartService
         }
         return false;
     }
+
+    /**
+     * Calculate sub total of cart item
+     */
+    public function calculateSubTotalPerItem(CartItem $cartItem): float
+    {
+        return $cartItem->qty * $cartItem->product->price;
+    }
+
+    /**
+     * Calculate total price per cart
+     */
+    public function calculateTotal(Cart $cart): float
+    {
+        $total = 0;
+        foreach($cart->items as $item) {
+            $total += $this->calculateSubTotalPerItem($item);
+        }
+
+        return $total;
+    }
 }

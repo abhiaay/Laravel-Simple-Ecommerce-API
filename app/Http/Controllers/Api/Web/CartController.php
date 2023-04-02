@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Web;
 
 use App\DTO\Cart;
+use App\Exceptions\CartException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Web\AddCartItemRequest;
 use App\Http\Resources\Api\Web\CartItemResource;
@@ -35,6 +36,9 @@ class CartController extends Controller
 
     public function show()
     {
-        return new CartResource(auth()->user()->cart);
+        if(! ($cart = auth()->user()?->cart)) {
+            throw new CartException("User not have cart");
+        }
+        return new CartResource($cart);
     }
 }

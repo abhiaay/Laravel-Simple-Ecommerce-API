@@ -5,6 +5,6 @@ use App\DTO\Base\DTO;
 
 class Cart extends DTO
 {
-    protected int $user_id;
-    protected int $_id;
+    protected mixed $user_id;
+    protected mixed $_id;
 }

@@ -3,8 +3,11 @@
 namespace App\Exceptions;
 
 use App\Traits\ResponseAPI;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Response;
+use Illuminate\Validation\UnauthorizedException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -53,7 +56,12 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $e)
     {
         if($request->wantsJson()) {
-            return $this->error($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+            if($e instanceof UnauthorizedException || $e instanceof UnauthorizedHttpException || $e instanceof AuthorizationException) {
+                return $this->error($e->getMessage(), Response::HTTP_UNAUTHORIZED);
+
+            } else {
+                return $this->error($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
         }
 
         return parent::render($request, $e);

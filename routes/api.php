@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'auth'], function() {
     Route::post('login', 'AuthController@doLogin')->name('login');
 });
-Route::apiResource('product', 'ProductController')->only(['index', 'show']);
+Route::apiResource('product', 'ProductController')->only(['index', 'show', 'store']);
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });

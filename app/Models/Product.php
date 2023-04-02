@@ -12,6 +12,12 @@ class Product extends Model
 
     public $uuids = true;
 
+    protected $guarded = false;
+
+    protected $casts = [
+        'images' => 'array'
+    ];
+
     #################
     #   RELATIONS   #
     #################

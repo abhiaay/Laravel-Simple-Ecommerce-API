@@ -15,7 +15,8 @@ class Product extends Model
     protected $guarded = false;
 
     protected $casts = [
-        'images' => 'array'
+        'created_at' => 'datetime: d-m-Y H:i:s',
+        'updated_at' => 'datetime: d-m-Y H:i:s',
     ];
 
     #################

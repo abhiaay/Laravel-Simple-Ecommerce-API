@@ -21,6 +21,7 @@ Route::apiResource('product/category', 'ProductCategoryController')->only('index
 Route::apiResource('product', 'ProductController')->only(['index', 'show', 'store']);
 Route::group(['prefix' => 'cart', 'as' => 'cart.'], function() {
     Route::post('add-item', 'CartController@addItem')->name('add-item');
+    Route::get('my-cart', 'CartController@show')->name('show');
 });
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();

@@ -6,6 +6,7 @@ use App\DTO\Cart;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Web\AddCartItemRequest;
 use App\Http\Resources\Api\Web\CartItemResource;
+use App\Http\Resources\Api\Web\CartResource;
 use App\Services\Order\Cart\CartService;
 use App\Traits\ResponseAPI;
 use Illuminate\Http\Request;
@@ -30,5 +31,10 @@ class CartController extends Controller
         }
         
         return $this->error('Failed to add item to cart, something happen', Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    public function show()
+    {
+        return new CartResource(auth()->user()->cart);
     }
 }

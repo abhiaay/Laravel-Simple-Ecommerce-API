@@ -7,6 +7,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Response;
 use Illuminate\Validation\UnauthorizedException;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Throwable;
 
@@ -59,7 +60,7 @@ class Handler extends ExceptionHandler
             if($e instanceof UnauthorizedException || $e instanceof UnauthorizedHttpException || $e instanceof AuthorizationException) {
                 return $this->error($e->getMessage(), Response::HTTP_UNAUTHORIZED);
 
-            } else {
+            } else if(! $e instanceof ValidationException) {
                 return $this->error($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
             }
         }

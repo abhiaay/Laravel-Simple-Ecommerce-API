@@ -23,6 +23,9 @@ class CartService
         $this->cartRepository = $cartRepository;
     }
 
+    /**
+     * Add single item to cart
+     */
     public function addItem(Cart $cart, array $item): CartItem|bool
     {
         $DTOCartItem = new DTOCartItem(array_merge($item, ['cart_id' => $cart->id]));
@@ -32,6 +35,9 @@ class CartService
         return $this->cartRepository->addItem($cart, $DTOCartItem) ?? false;
     }
 
+    /**
+     * Add collection of items to given cart
+     */
     public function addItems(Cart $cart, array $items): bool
     {
         foreach($items as $item) {
@@ -42,6 +48,9 @@ class CartService
         return true;
     }
 
+    /**
+     * Create Cart
+     */
     public function createCart(User $user): Cart|false
     {
         $DTOCart = new DTOCart(['user_id' => $user->id]);
